@@ -31,17 +31,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let product of products'>
-                        <script>console.log(products); console.log(product);</script>
+                    <tr *ngFor='let product of filteredProducts'>
                         <td>
                             <img [src]='product.imageUrl' [title]='product.productName | uppercase'
                         [style.width.px]=imageWidth [style.margin.px]=imageMargin *ngIf='showImage'/>
                         </td>
                         <td>{{ product.productName }}</td>
-                        <td>{{product.productCode}}</td>
-                        <td>{{product.releaseDate}}</td>
-                        <td>{{product.price | currency:'INR':true:'1.2-2'}}</td>
-                        <td>{{product.starRating}}</td>
+                        <td>{{ product.productCode | lowercase | convertToSpaces:'-' }}</td>
+                        <td>{{ product.releaseDate }}</td>
+                        <td>{{ product.price | currency:'INR':true:'1.2-2' }}</td>
+                        <td>{{ product.starRating }}</td>
                     </tr>
                 </tbody>
             </table>
