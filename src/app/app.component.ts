@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { ProductService } from './products/product.service'
 
 //Decorator - begins with @, using component decorator
 /*
@@ -13,7 +14,8 @@ templateUrl: the link to template in a different file
   template: `
   <div>
   <pm-products></pm-products>
-  </div>`
+  </div>`,
+  providers: [ProductService] 
 })
 
 // Class - with property pageTitle of type string and default value
