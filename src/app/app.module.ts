@@ -4,36 +4,37 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router'
 
 import { AppComponent } from './app.component';
-import { ProductListComponent } from './products/product-list.component';
-import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
-import { StarComponent } from './shared/star.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ProductDetailComponent } from './products/product-detail.component';
 import { WelcomeComponent } from './home/welcome.component';
-import { ProductGuardService } from './products/product-guard.service';
+import { ProductModule } from './products/product.module';
 
 @NgModule({
+  //every component, directive, pipe created must belong to only one angular module; they are private by default
+  //module provides template resolutions env for its component templates
   declarations: [
     AppComponent,
-    ProductListComponent,
-    ConvertToSpacesPipe,
-    StarComponent,
-    ProductDetailComponent,
     WelcomeComponent
   ],
+  //allows to import modules which export modules needed. any exported components, directives, pipes are available
+  //import what needed, imports are not inherited, 
   imports: [
     BrowserModule,
-    FormsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: 'products', component: ProductListComponent },
-      { path: 'products/:id', canActivate: [ ProductGuardService ], component: ProductDetailComponent },
       { path: 'welcome', component: WelcomeComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
-    ])
+    ]),
+    ProductModule
   ],
-  providers: [HttpClientModule, ProductGuardService],
+  //any service is registered at the root of the application, do not add into shared modules,
+  //build a core module for services and import it once, guard services have to be at the module
+  providers: [HttpClientModule],
+  //bootstrap array must contain only one component. which is the starter component for the app
+  //only root module should have this array.
   bootstrap: [AppComponent]
+  //exports array of the decorator exports modules mentioned here, any component, directives, pipes
+  //re-export something without importing; never export a service (they are already shared throughout the app)
 })
+
 export class AppModule { }
